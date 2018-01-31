@@ -1,16 +1,47 @@
 <template>
   <view>
-    HOME PAGE
+    <swiper indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}" wx:key="{{item}}">
+        <swiper-item>
+          <image src="{{item}}" mode="aspectFit " class="slide-image"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    <text>{{now}}</text>
+    <button @tap="handle">Tap</button>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
   export default class Index extends wepy.page {
-    
+    data = {
+      indicatorDots: true,
+      autoplay: false,
+      interval: 500,
+      duration: 500,
+      imgUrls: [
+        'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      ]
+    }
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+    methods = {
+      handle(){
+        console.log('tap tap');
+      }
+    }
   }
 </script>
 
 <style lang="scss">
-
+  .slide-image{
+    width: 750rpx;
+  }
 </style>
