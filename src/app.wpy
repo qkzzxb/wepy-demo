@@ -16,9 +16,9 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/more',
       'pages/home',
-      'pages/index',
-      'pages/more'
+      'pages/index'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -86,6 +86,7 @@ export default class extends wepy.app {
     }
     wepy.getUserInfo({
       success (res) {
+        console.log('用户信息',res);
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
       }

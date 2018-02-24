@@ -10,6 +10,7 @@
     </swiper>
     <text>{{now}}</text>
     <button @tap="handle">Tap</button>
+    <button @tap="test">Test</button>
   </view>
 </template>
 
@@ -35,6 +36,14 @@ import wepy from 'wepy'
     methods = {
       handle(){
         console.log('tap tap');
+      },
+      test(){
+        wepy.request({
+          url: 'http://localhost:3000/pet/findall',
+          success: function (res) {
+            console.log('success', res)
+          }
+        })
       }
     }
   }

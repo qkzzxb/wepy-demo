@@ -1,16 +1,55 @@
 <template>
   <view>
-    MORE PAGE
+    <button @tap="send">发送</button>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
   export default class Index extends wepy.page {
-    
+    data = {
+    }
+    onLoad() {
+      this.init()
+    }
+    methods = {
+      send(){
+        wepy.sendSocketMessage({
+          data: 'Hello,World:' + Math.round(Math.random() * 0xFFFFFF).toString(),
+        })
+      }
+    }
+    init(){
+      console.log('0xFFFFFF是',0xFFFFFF);
+      wepy.connectSocket({
+        url: 'ws://localhost:8080',
+        success:function(r){
+          console.log("ok")
+          wepy.onSocketMessage(function(res) {
+            console.log('收到服务器内容：' + res.data)
+          })
+        },
+        fail:function(r){
+          console.log("fail")
+        },
+        complete:function(r){
+          console.log("complete")
+        }
+      })
+    }
   }
 </script>
 
 <style lang="scss">
-
+  .more-li{
+    display: flex;
+    image{
+      width: 360rpx;
+      height: 360rpx;
+    }
+    text{
+      color:aquamarine;
+      margin-left: auto;
+    }
+  }
 </style>

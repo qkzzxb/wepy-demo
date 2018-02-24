@@ -218,7 +218,8 @@
     }
 
     onLoad() {
-      let self = this
+      let self = this;
+      console.log('this', this);
       this.$parent.getUserInfo(function (userInfo) {
         if (userInfo) {
           self.userInfo = userInfo

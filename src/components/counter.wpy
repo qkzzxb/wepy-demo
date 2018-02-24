@@ -29,9 +29,9 @@
     props = {
       num: {
         type: [Number, String],
-        coerce: function (v) {
-          return +v
-        },
+        // coerce: function (v) {
+        //   return +v
+        // },
         default: 50
       }
     }
