@@ -10,8 +10,14 @@ import wepy from 'wepy'
     data = {
     }
     onLoad() {
-      this.init()
+      this.init();
     }
+    /* async onLoad() {
+      await this.init();
+      wepy.onSocketMessage(res => {
+        console.log('收到服务器内容：' + res.data)
+      })
+    } */
     methods = {
       send(){
         wepy.sendSocketMessage({
@@ -20,21 +26,14 @@ import wepy from 'wepy'
       }
     }
     init(){
-      console.log('0xFFFFFF是',0xFFFFFF);
       wepy.connectSocket({
         url: 'ws://localhost:8080',
-        success:function(r){
-          console.log("ok")
-          wepy.onSocketMessage(function(res) {
-            console.log('收到服务器内容：' + res.data)
-          })
-        },
-        fail:function(r){
-          console.log("fail")
-        },
-        complete:function(r){
-          console.log("complete")
-        }
+      })
+      .then((res) =>{
+        console.log('连接成功', res);
+        wepy.onSocketMessage(res => {
+          console.log('收到服务器内容：' + res.data)
+        })
       })
     }
   }
