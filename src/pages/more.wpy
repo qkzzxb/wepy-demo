@@ -1,6 +1,14 @@
 <template>
   <view>
     <button @tap="send">发送</button>
+    <view class="section">
+      <view class="section__title">日期选择器</view>
+      <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" @change="bindDateChange">
+        <view class="picker">
+          当前选择: {{date}}
+        </view>
+      </picker>
+    </view>
   </view>
 </template>
 
@@ -8,33 +16,20 @@
 import wepy from 'wepy'
   export default class Index extends wepy.page {
     data = {
+      date: ''
     }
-    onLoad() {
-      this.init();
-    }
-    /* async onLoad() {
-      await this.init();
-      wepy.onSocketMessage(res => {
-        console.log('收到服务器内容：' + res.data)
-      })
-    } */
     methods = {
       send(){
-        wepy.sendSocketMessage({
-          data: 'Hello,World:' + Math.round(Math.random() * 0xFFFFFF).toString(),
+        wepy.request({
+          url:'http://127.0.0.1:3003/api/wechat/massmsg/news/list',
+          method : 'GET'
         })
-      }
-    }
-    init(){
-      wepy.connectSocket({
-        url: 'ws://localhost:8080',
-      })
-      .then((res) =>{
-        console.log('连接成功', res);
-        wepy.onSocketMessage(res => {
-          console.log('收到服务器内容：' + res.data)
-        })
-      })
+        .then((d) => console.log(d));
+      },
+      bindDateChange(e) {
+        console.log('picker发送选择改变，携带值为', e.detail.value)
+        this.date = e.detail.value;
+      },
     }
   }
 </script>
